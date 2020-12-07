@@ -1,5 +1,5 @@
+import "../../helpers/iframeLoader.js";
 import axios from 'axios';
-import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 import React, {Component} from 'react';
 
 export default class Editor extends Component 
@@ -7,6 +7,8 @@ export default class Editor extends Component
     constructor()
     {
         super();
+
+        this.currentPage = "index.html";
 
         this.state = {
             pageList: [],
@@ -17,7 +19,22 @@ export default class Editor extends Component
 
     componentDidMount()
     {
+        this.init(this.currentPage);
+    }
+
+    init(page)
+    {
+        this.iframe = document.querySelector('iframe');
+        this.open(page);
         this.loadPageList();
+    }
+
+    open(page)
+    {
+        this.currentPage = `../${page}`;
+        this.iframe.load(this.currentPage, () => {
+            console.log(this.currentPage);
+        });
     }
 
     loadPageList() {
@@ -54,7 +71,7 @@ export default class Editor extends Component
         });
         */
         return (
-            <iframe src="../index.html" frameBorder="0"></iframe>
+            <iframe src={this.currentPage} frameBorder="0"></iframe>
             /*
             <>
                 <input 
