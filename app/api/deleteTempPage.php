@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 if ($_SESSION["auth"] != true)
@@ -8,14 +9,14 @@ if ($_SESSION["auth"] != true)
 }
 
 $_POST = json_decode(file_get_contents("php://input"), true);
-$newFile = "../../" . $_POST["name"] . ".html";
+$file = "../../yguyhfjfj34256_3356.html";
 
-if (file_exists($newFile)) 
+if (file_exists($file)) 
 {
-    header("HTTP/1.0 400 Bad Request");
+    unlink($file);
 }
 else
 {
-    fopen($newFile, "w");
+    header("HTTP/1.0 400 Bad Request");
 }
 ?>
